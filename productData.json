@@ -1,0 +1,62 @@
+[
+  {
+    "name": "Apple iPhone 13",
+    "description": "Latest model of the iPhone with A15 Bionic chip.",
+    "price": 999.99,
+    "image": "https://example.com/images/iphone13.jpg"
+  },
+  {
+    "name": "Samsung Galaxy S21",
+    "description": "Samsung's flagship smartphone with Exynos 2100.",
+    "price": 799.99,
+    "image": "https://example.com/images/galaxys21.jpg"
+  },
+  {
+    "name": "Sony WH-1000XM4",
+    "description": "Noise-canceling over-ear headphones with superior sound quality.",
+    "price": 349.99,
+    "image": "https://example.com/images/wh1000xm4.jpg"
+  },
+  {
+    "name": "Apple MacBook Pro",
+    "description": "Powerful laptop with M1 chip for professionals.",
+    "price": 1299.99,
+    "image": "https://example.com/images/macbookpro.jpg"
+  },
+  {
+    "name": "Dell XPS 13",
+    "description": "Compact and powerful ultrabook with Intel Core i7.",
+    "price": 999.99,
+    "image": "https://example.com/images/xps13.jpg"
+  },
+  {
+    "name": "Sony PlayStation 5",
+    "description": "Next-gen gaming console with powerful graphics.",
+    "price": 499.99,
+    "image": "https://example.com/images/ps5.jpg"
+  },
+  {
+    "name": "Microsoft Xbox Series X",
+    "description": "Powerful gaming console with 4K gaming support.",
+    "price": 499.99,
+    "image": "https://example.com/images/xboxseriesx.jpg"
+  },
+  {
+    "name": "Apple iPad Pro",
+    "description": "High-end tablet with A12Z Bionic chip.",
+    "price": 799.99,
+    "image": "https://example.com/images/ipadpro.jpg"
+  },
+  {
+    "name": "Bose QuietComfort 35 II",
+    "description": "Noise-canceling wireless headphones with Alexa voice control.",
+    "price": 299.99,
+    "image": "https://example.com/images/qc35ii.jpg"
+  },
+  {
+    "name": "Amazon Echo Dot",
+    "description": "Smart speaker with Alexa voice assistant.",
+    "price": 49.99,
+    "image": "https://example.com/images/echodot.jpg"
+  }
+]
