@@ -21,6 +21,7 @@ const cartSchema = new mongoose.Schema({
         min: [1, "Quantity can not be less than 1."],
         default: 1,
       },
+      image: String,
     },
   ],
 });

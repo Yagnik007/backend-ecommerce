@@ -6,10 +6,9 @@ const { protect } = require("../middleware/authMiddleware");
 const router = express.Router();
 
 router.get(
-  "/",
-  protect,
+  "/:userId",
   asyncHandler(async (req, res) => {
-    const cart = await Cart.findOne({ userId: req.user._id }).populate(
+    const cart = await Cart.findOne({ userId: req.params.userId }).populate(
       "items.productId",
       "name price"
     );
@@ -43,6 +42,7 @@ router.post(
           name: items[0].name,
           price: items[0].price,
           quantity: items[0].quantity,
+          image: items[0].image,
         });
       }
 
@@ -59,43 +59,40 @@ router.post(
   })
 );
 
-// router.put(
-//   "/:id",
-//   protect,
-//   asyncHandler(async (req, res) => {
-//     const { quantity } = req.body;
-
-//     const cart = await Cart.findOne({ userId: req.user._id });
-
-//     if (cart) {
-//       const itemIndex = cart.items.findIndex(
-//         (item) => item.productId.toString() === req.params.id
-//       );
-
-//       if (itemIndex > -1) {
-//         const item = cart.items[itemIndex];
-//         item.quantity = quantity;
-//         await cart.save();
-//         res.json(cart);
-//       } else {
-//         res.status(404);
-//         throw new Error("Item not found in cart");
-//       }
-//     } else {
-//       res.status(404);
-//       throw new Error("Cart not found");
-//     }
-//   })
-// );
-
-router.delete(
-  "/:id",
-  protect,
+router.put(
+  "/updateCartItem/:id",
   asyncHandler(async (req, res) => {
-    const cart = await Cart.findOne({ userId: req.user._id });    
+    const { productId } = req.body;
+    const cart = await Cart.findOne({ userId: req.params.id });
+
     if (cart) {
       const itemIndex = cart.items.findIndex(
-        (item) => item.productId.toString() === req.params.id
+        (item) => item.productId.toString() === productId.productId._id
+      );
+
+      if (itemIndex > -1) {
+        const item = cart.items[itemIndex]
+        item.quantity = productId.quantity;
+        await cart.save();
+        res.json(cart);
+      } else {
+        res.status(404);
+        throw new Error("Item not found in cart");
+      }
+    } else {
+      res.status(404);
+      throw new Error("Cart not found");
+    }
+  })
+);
+
+router.delete(
+  "/:id/:productId",
+  asyncHandler(async (req, res) => {
+    const cart = await Cart.findOne({ userId: req.params.id });
+    if (cart) {
+      const itemIndex = cart.items.findIndex(
+        (item) => item.productId.toString() === req.params.productId
       );
       if (itemIndex > -1) {
         cart.items.splice(itemIndex, 1);
@@ -103,9 +100,6 @@ router.delete(
         res.json(cart);
       } else {
         res.status(404);
-
-
-        
         throw new Error("Item not found in cart");
       }
     } else {
