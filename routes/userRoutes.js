@@ -35,8 +35,7 @@ router.post(
     const userExists = await User.findOne({ email });
 
     if (userExists) {
-      res.status(400);
-      throw new Error("User already exists");
+      return res.status(400).json({ message: "User already exists" });
     }
 
     const user = await User.create({
@@ -46,15 +45,14 @@ router.post(
     });
 
     if (user) {
-      res.status(201).json({
+      return res.status(201).json({
         _id: user._id,
         name: user.name,
         email: user.email,
         token: generateToken(user._id),
       });
     } else {
-      res.status(400);
-      throw new Error("Invalid user data");
+      return res.status(400).json({ message: "Invalid user data" });
     }
   })
 );
@@ -73,15 +71,14 @@ router.post(
     const user = await User.findOne({ email });
 
     if (user && (await user.matchPassword(password))) {
-      res.json({
+      return res.json({
         _id: user._id,
         name: user.name,
         email: user.email,
         token: generateToken(user._id),
       });
     } else {
-      res.status(401);
-      throw new Error("Invalid email or password");
+      return res.status(401).json({ message: "Invalid email or password" });
     }
   })
 );
