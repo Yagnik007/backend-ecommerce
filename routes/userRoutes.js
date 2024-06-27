@@ -1,13 +1,35 @@
 const express = require("express");
 const asyncHandler = require("express-async-handler");
+const { body, validationResult } = require("express-validator");
 const User = require("../models/User");
 const generateToken = require("../utils/generateToken");
 
 const router = express.Router();
 
+// Validation middleware for registration
+const validateRegistration = [
+  body("name").notEmpty().withMessage("Name is required"),
+  body("email").isEmail().withMessage("Please enter a valid email"),
+  body("password")
+    .isLength({ min: 6 })
+    .withMessage("Password must be at least 6 characters long"),
+];
+
+// Validation middleware for login
+const validateLogin = [
+  body("email").isEmail().withMessage("Please enter a valid email"),
+  body("password").notEmpty().withMessage("Password is required"),
+];
+
 router.post(
   "/register",
+  validateRegistration,
   asyncHandler(async (req, res) => {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      return res.status(400).json({ errors: errors.array() });
+    }
+
     const { name, email, password } = req.body;
 
     const userExists = await User.findOne({ email });
@@ -39,7 +61,13 @@ router.post(
 
 router.post(
   "/login",
+  validateLogin,
   asyncHandler(async (req, res) => {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      return res.status(400).json({ errors: errors.array() });
+    }
+
     const { email, password } = req.body;
 
     const user = await User.findOne({ email });
